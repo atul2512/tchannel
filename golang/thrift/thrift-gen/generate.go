@@ -85,5 +85,5 @@ func runThrift(inFile string, thriftImport string) (string, error) {
 		return "", fmt.Errorf("failed to delete -remote folders: %v", err)
 	}
 
-	return filepath.Join(outDir, "tchan-"+baseName+".go"), nil
+	return filepath.Join(outDir, "tchan-"+baseName), nil
 }
