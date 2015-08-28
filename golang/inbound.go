@@ -89,6 +89,7 @@ func (c *Connection) handleCallReq(frame *Frame) bool {
 	response.headers = transportHeaders{}
 	response.messageForFragment = func(initial bool) message {
 		if initial {
+			// TODO(prashant): Move this to when the message is actually being sent.
 			call.AddAnnotation(AnnotationKeyServerSend)
 			targetEndpoint := TargetEndpoint{
 				HostPort:    c.localPeerInfo.HostPort,

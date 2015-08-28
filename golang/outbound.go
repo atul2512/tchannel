@@ -120,6 +120,7 @@ func (c *Connection) beginCall(ctx context.Context, serviceName string, callOpti
 				ServiceName: serviceName,
 				Operation:   operation,
 			}
+			// TODO(prashant): Move this to when the message is actually being sent.
 			call.AddAnnotation(AnnotationKeyClientReceive)
 			call.Report(call.callReq.Tracing, targetEndpoint, c.traceReporter)
 			return &response.callRes
