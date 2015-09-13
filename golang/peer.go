@@ -176,6 +176,22 @@ func (p *Peer) GetConnection(ctx context.Context) (*Connection, error) {
 	return c, nil
 }
 
+func (p *Peer) GetConnectionForRelay() (*Connection, error) {
+	p.mut.RLock()
+	if len(p.connections) == 0 {
+		p.mut.RUnlock()
+		ctx, cancel := NewContext(5 * time.Second)
+		defer cancel()
+
+		return p.GetConnection(ctx)
+	}
+
+	conn := randConn(p.connections)
+	p.mut.RUnlock()
+
+	return conn, nil
+}
+
 // AddConnection adds an active connection to the peer's connection list.
 // If a connection is not active, ErrInvalidConnectionState will be returned.
 func (p *Peer) AddConnection(c *Connection) error {
